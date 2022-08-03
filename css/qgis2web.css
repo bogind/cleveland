@@ -60,4 +60,8 @@
             color: #999;
             background-color: #e8e8e8;
         }
-        
+        .mapboxgl-popup-content{
+            height: 40vh;
+            overflow-y: scroll;
+            width: 350px;
+        }
