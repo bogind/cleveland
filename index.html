@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="mapbox/mapbox-gl.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+            <nav id="menu"></nav>
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="./mapbox/mapbox-gl.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Centroids_1.js"></script>
+<script src="./mapbox/style.js"></script>
+<script src="./js/Autolinker.min.js"></script>
+<script>
+var map = new mapboxgl.Map({
+ container: 'map',
+ style: styleJSON,
+ center: [-81.67227794082731,41.450375127979726],
+ zoom: 11,
+ bearing: 360.0,
+ attributionControl: false
+});
+map.addControl(new mapboxgl.NavigationControl(), 'top-left');
+map.addControl(new mapboxgl.AttributionControl({
+    customAttribution: '<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://github.com/mapbox/mapbox-gl-js" target="_blank">Mapbox GL JS</a> &middot; <a href="https://qgis.org" target="_blank">QGIS</a>',
+    compact: false
+}));
+var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+
+map.on('click', 'lyr_Centroids_1_0', function (e) {
+    var description = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['fid2'] !== null ? autolinker.link(e.features[0].properties['fid2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['fid'] !== null ? autolinker.link(e.features[0].properties['fid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (e.features[0].properties['objectid'] !== null ? autolinker.link(e.features[0].properties['objectid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">parcelpin</th>\
+                        <td>' + (e.features[0].properties['parcelpin'] !== null ? autolinker.link(e.features[0].properties['parcelpin'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">PARCEL_PK</th>\
+                        <td>' + (e.features[0].properties['PARCEL_PK'] !== null ? autolinker.link(e.features[0].properties['PARCEL_PK'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">parcel_type</th>\
+                        <td>' + (e.features[0].properties['parcel_type'] !== null ? autolinker.link(e.features[0].properties['parcel_type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">parcel_id</th>\
+                        <td>' + (e.features[0].properties['parcel_id'] !== null ? autolinker.link(e.features[0].properties['parcel_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">book_page</th>\
+                        <td>' + (e.features[0].properties['book_page'] !== null ? autolinker.link(e.features[0].properties['book_page'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">cama_parent_parcel</th>\
+                        <td>' + (e.features[0].properties['cama_parent_parcel'] !== null ? autolinker.link(e.features[0].properties['cama_parent_parcel'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">no_list_info</th>\
+                        <td>' + (e.features[0].properties['no_list_info'] !== null ? autolinker.link(e.features[0].properties['no_list_info'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">parcel_year</th>\
+                        <td>' + (e.features[0].properties['parcel_year'] !== null ? autolinker.link(e.features[0].properties['parcel_year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">parcel_owner</th>\
+                        <td>' + (e.features[0].properties['parcel_owner'] !== null ? autolinker.link(e.features[0].properties['parcel_owner'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">deeded_owner</th>\
+                        <td>' + (e.features[0].properties['deeded_owner'] !== null ? autolinker.link(e.features[0].properties['deeded_owner'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">grantor</th>\
+                        <td>' + (e.features[0].properties['grantor'] !== null ? autolinker.link(e.features[0].properties['grantor'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">grantee</th>\
+                        <td>' + (e.features[0].properties['grantee'] !== null ? autolinker.link(e.features[0].properties['grantee'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">transfer_date</th>\
+                        <td>' + (e.features[0].properties['transfer_date'] !== null ? autolinker.link(e.features[0].properties['transfer_date'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sales_amount</th>\
+                        <td>' + (e.features[0].properties['sales_amount'] !== null ? autolinker.link(e.features[0].properties['sales_amount'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_addr</th>\
+                        <td>' + (e.features[0].properties['par_addr'] !== null ? autolinker.link(e.features[0].properties['par_addr'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_predir</th>\
+                        <td>' + (e.features[0].properties['par_predir'] !== null ? autolinker.link(e.features[0].properties['par_predir'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_street</th>\
+                        <td>' + (e.features[0].properties['par_street'] !== null ? autolinker.link(e.features[0].properties['par_street'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_suffix</th>\
+                        <td>' + (e.features[0].properties['par_suffix'] !== null ? autolinker.link(e.features[0].properties['par_suffix'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_unit</th>\
+                        <td>' + (e.features[0].properties['par_unit'] !== null ? autolinker.link(e.features[0].properties['par_unit'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_city</th>\
+                        <td>' + (e.features[0].properties['par_city'] !== null ? autolinker.link(e.features[0].properties['par_city'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_zip</th>\
+                        <td>' + (e.features[0].properties['par_zip'] !== null ? autolinker.link(e.features[0].properties['par_zip'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">par_addr_all</th>\
+                        <td>' + (e.features[0].properties['par_addr_all'] !== null ? autolinker.link(e.features[0].properties['par_addr_all'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mail_name</th>\
+                        <td>' + (e.features[0].properties['mail_name'] !== null ? autolinker.link(e.features[0].properties['mail_name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mail_addr_street</th>\
+                        <td>' + (e.features[0].properties['mail_addr_street'] !== null ? autolinker.link(e.features[0].properties['mail_addr_street'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mail_unit</th>\
+                        <td>' + (e.features[0].properties['mail_unit'] !== null ? autolinker.link(e.features[0].properties['mail_unit'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mail_city</th>\
+                        <td>' + (e.features[0].properties['mail_city'] !== null ? autolinker.link(e.features[0].properties['mail_city'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mail_state</th>\
+                        <td>' + (e.features[0].properties['mail_state'] !== null ? autolinker.link(e.features[0].properties['mail_state'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mail_zip</th>\
+                        <td>' + (e.features[0].properties['mail_zip'] !== null ? autolinker.link(e.features[0].properties['mail_zip'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">mail_country</th>\
+                        <td>' + (e.features[0].properties['mail_country'] !== null ? autolinker.link(e.features[0].properties['mail_country'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">tax_luc</th>\
+                        <td>' + (e.features[0].properties['tax_luc'] !== null ? autolinker.link(e.features[0].properties['tax_luc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">tax_luc_description</th>\
+                        <td>' + (e.features[0].properties['tax_luc_description'] !== null ? autolinker.link(e.features[0].properties['tax_luc_description'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ext_luc</th>\
+                        <td>' + (e.features[0].properties['ext_luc'] !== null ? autolinker.link(e.features[0].properties['ext_luc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ext_luc_description</th>\
+                        <td>' + (e.features[0].properties['ext_luc_description'] !== null ? autolinker.link(e.features[0].properties['ext_luc_description'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">zoning_code</th>\
+                        <td>' + (e.features[0].properties['zoning_code'] !== null ? autolinker.link(e.features[0].properties['zoning_code'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">zoning_use</th>\
+                        <td>' + (e.features[0].properties['zoning_use'] !== null ? autolinker.link(e.features[0].properties['zoning_use'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">property_class</th>\
+                        <td>' + (e.features[0].properties['property_class'] !== null ? autolinker.link(e.features[0].properties['property_class'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">tax_district</th>\
+                        <td>' + (e.features[0].properties['tax_district'] !== null ? autolinker.link(e.features[0].properties['tax_district'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">neighborhood_code</th>\
+                        <td>' + (e.features[0].properties['neighborhood_code'] !== null ? autolinker.link(e.features[0].properties['neighborhood_code'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">condo_complex_id</th>\
+                        <td>' + (e.features[0].properties['condo_complex_id'] !== null ? autolinker.link(e.features[0].properties['condo_complex_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">tax_abatement</th>\
+                        <td>' + (e.features[0].properties['tax_abatement'] !== null ? autolinker.link(e.features[0].properties['tax_abatement'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">road_type</th>\
+                        <td>' + (e.features[0].properties['road_type'] !== null ? autolinker.link(e.features[0].properties['road_type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">water</th>\
+                        <td>' + (e.features[0].properties['water'] !== null ? autolinker.link(e.features[0].properties['water'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">sewer</th>\
+                        <td>' + (e.features[0].properties['sewer'] !== null ? autolinker.link(e.features[0].properties['sewer'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">gas</th>\
+                        <td>' + (e.features[0].properties['gas'] !== null ? autolinker.link(e.features[0].properties['gas'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">electricity</th>\
+                        <td>' + (e.features[0].properties['electricity'] !== null ? autolinker.link(e.features[0].properties['electricity'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">tax_year</th>\
+                        <td>' + (e.features[0].properties['tax_year'] !== null ? autolinker.link(e.features[0].properties['tax_year'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_tax_luc</th>\
+                        <td>' + (e.features[0].properties['certified_tax_luc'] !== null ? autolinker.link(e.features[0].properties['certified_tax_luc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_tax_land</th>\
+                        <td>' + (e.features[0].properties['certified_tax_land'] !== null ? autolinker.link(e.features[0].properties['certified_tax_land'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_tax_building</th>\
+                        <td>' + (e.features[0].properties['certified_tax_building'] !== null ? autolinker.link(e.features[0].properties['certified_tax_building'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_tax_total</th>\
+                        <td>' + (e.features[0].properties['certified_tax_total'] !== null ? autolinker.link(e.features[0].properties['certified_tax_total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_exempt_luc</th>\
+                        <td>' + (e.features[0].properties['certified_exempt_luc'] !== null ? autolinker.link(e.features[0].properties['certified_exempt_luc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_exempt_land</th>\
+                        <td>' + (e.features[0].properties['certified_exempt_land'] !== null ? autolinker.link(e.features[0].properties['certified_exempt_land'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_exempt_building</th>\
+                        <td>' + (e.features[0].properties['certified_exempt_building'] !== null ? autolinker.link(e.features[0].properties['certified_exempt_building'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_exempt_total</th>\
+                        <td>' + (e.features[0].properties['certified_exempt_total'] !== null ? autolinker.link(e.features[0].properties['certified_exempt_total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_abated_luc</th>\
+                        <td>' + (e.features[0].properties['certified_abated_luc'] !== null ? autolinker.link(e.features[0].properties['certified_abated_luc'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_abated_land</th>\
+                        <td>' + (e.features[0].properties['certified_abated_land'] !== null ? autolinker.link(e.features[0].properties['certified_abated_land'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_abated_building</th>\
+                        <td>' + (e.features[0].properties['certified_abated_building'] !== null ? autolinker.link(e.features[0].properties['certified_abated_building'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">certified_abated_total</th>\
+                        <td>' + (e.features[0].properties['certified_abated_total'] !== null ? autolinker.link(e.features[0].properties['certified_abated_total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">gross_certified_land</th>\
+                        <td>' + (e.features[0].properties['gross_certified_land'] !== null ? autolinker.link(e.features[0].properties['gross_certified_land'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">gross_certified_building</th>\
+                        <td>' + (e.features[0].properties['gross_certified_building'] !== null ? autolinker.link(e.features[0].properties['gross_certified_building'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">gross_certified_total</th>\
+                        <td>' + (e.features[0].properties['gross_certified_total'] !== null ? autolinker.link(e.features[0].properties['gross_certified_total'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">res_bldg_count</th>\
+                        <td>' + (e.features[0].properties['res_bldg_count'] !== null ? autolinker.link(e.features[0].properties['res_bldg_count'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total_res_liv_area</th>\
+                        <td>' + (e.features[0].properties['total_res_liv_area'] !== null ? autolinker.link(e.features[0].properties['total_res_liv_area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total_res_rooms</th>\
+                        <td>' + (e.features[0].properties['total_res_rooms'] !== null ? autolinker.link(e.features[0].properties['total_res_rooms'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">com_bldg_count</th>\
+                        <td>' + (e.features[0].properties['com_bldg_count'] !== null ? autolinker.link(e.features[0].properties['com_bldg_count'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total_com_use_area</th>\
+                        <td>' + (e.features[0].properties['total_com_use_area'] !== null ? autolinker.link(e.features[0].properties['total_com_use_area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">com_living_units</th>\
+                        <td>' + (e.features[0].properties['com_living_units'] !== null ? autolinker.link(e.features[0].properties['com_living_units'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total_legal_front</th>\
+                        <td>' + (e.features[0].properties['total_legal_front'] !== null ? autolinker.link(e.features[0].properties['total_legal_front'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total_square_ft</th>\
+                        <td>' + (e.features[0].properties['total_square_ft'] !== null ? autolinker.link(e.features[0].properties['total_square_ft'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">total_acreage</th>\
+                        <td>' + (e.features[0].properties['total_acreage'] !== null ? autolinker.link(e.features[0].properties['total_acreage'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Shape__Area</th>\
+                        <td>' + (e.features[0].properties['Shape__Area'] !== null ? autolinker.link(e.features[0].properties['Shape__Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Shape__Length</th>\
+                        <td>' + (e.features[0].properties['Shape__Length'] !== null ? autolinker.link(e.features[0].properties['Shape__Length'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">longitude</th>\
+                        <td>' + (e.features[0].properties['longitude'] !== null ? autolinker.link(e.features[0].properties['longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">latitude</th>\
+                        <td>' + (e.features[0].properties['latitude'] !== null ? autolinker.link(e.features[0].properties['latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>'
+
+    new mapboxgl.Popup()
+        .setLngLat(e.lngLat)
+        .setHTML(description)
+        .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'lyr_Centroids_1_0', function () {
+    map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'lyr_Centroids_1_0', function () {
+    map.getCanvas().style.cursor = '';
+});
+</script>
+    </body>
+</html>
